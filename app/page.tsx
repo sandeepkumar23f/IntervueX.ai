@@ -1,7 +1,10 @@
 import Image from "next/image";
-
+import Login from "./login/page";
+import SignUp from "./signup/page";
 export default function Home() {
   return (
-    <h1>IntervueX</h1>
+    <>
+    <SignUp/>
+    </>
   );
 }
