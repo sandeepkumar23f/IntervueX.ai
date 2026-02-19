@@ -72,8 +72,8 @@ export default function SignUp() {
         setSuccessMessage("Account created successfully");
 
         setTimeout(() => {
-          router.push("/dashboard");
-        }, 1200);
+          router.push("/interview");
+        }, 1000);
       } else {
         setErrorMessage(result.message || "Signup failed");
       }

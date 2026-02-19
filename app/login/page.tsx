@@ -67,7 +67,7 @@ export default function Login() {
         setSuccessMessage("Login successful 🎉 Redirecting...");
 
         setTimeout(() => {
-          router.push("/dashboard"); 
+          router.push("/interview"); 
         }, 1000);
       } else {
         setErrorMessage(result.message || "Invalid email or password");
