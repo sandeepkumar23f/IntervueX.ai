@@ -68,9 +68,7 @@ export default function InterviewPage() {
   return (
     <div className="h-screen flex flex-col bg-black text-white">
 
-      <div className="p-4 border-b border-gray-700 text-xl font-bold">
-        🎤 InterveuX AI Interviewer
-      </div>
+      
 
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.map((msg, index) => (

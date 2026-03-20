@@ -87,10 +87,6 @@ export default function SignUp() {
 
   return (
     <>
-      <div className="fixed top-0 w-full h-16 flex items-center px-8 bg-white shadow-sm text-black font-bold text-2xl z-50">
-        InterveuX.ai
-      </div>
-
       <div className="min-h-[calc(100vh-64px)] pt-16 flex items-center justify-center bg-linear-to-r from-blue-500 to-gray-500">
         <div className="w-full max-w-md bg-white text-black rounded-lg p-8 shadow-md">
 
