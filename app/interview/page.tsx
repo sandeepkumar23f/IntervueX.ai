@@ -1,119 +1,113 @@
-"use client";
-
-import { useState, useRef } from "react";
-
-export default function InterviewPage() {
-  const [messages, setMessages] = useState<any[]>([
-    { role: "ai", content: "Hello  I am your AI interviewer. Tell me about yourself." }
-  ]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const recognitionRef = useRef<any>(null);
-
-  const API = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
-
-  const startListening = () => {
-    const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      alert("Speech recognition not supported in this browser");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.start();
-
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      setInput(transcript);
-    };
-
-    recognitionRef.current = recognition;
-  };
-
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const newMessages = [...messages, { role: "user", content: input }];
-    setMessages(newMessages);
-    setInput("");
-    setLoading(true);
-
-    try {
-      const res = await fetch(`${API}/api/ai/interview`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: input,
-          history: messages,
-        }),
-      });
-
-      const data = await res.json();
-
-      setMessages([
-        ...newMessages,
-        { role: "ai", content: data.reply || "No response" },
-      ]);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+import Navbar from "../navbar/page";
+export default function Home() {
   return (
-    <div className="h-screen flex flex-col bg-black text-white">
+    <div className="bg-black text-white min-h-screen">
 
-      
+      <Navbar />
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`max-w-xl p-3 rounded-lg ${
-              msg.role === "user"
-                ? "bg-blue-600 ml-auto"
-                : "bg-gray-700"
-            }`}
-          >
-            {msg.content}
-          </div>
-        ))}
+      <section className="flex flex-col items-center justify-center text-center px-6 md:px-20 py-20">
 
-        {loading && (
-          <div className="bg-gray-700 p-3 rounded-lg w-fit">
-            AI thinking...
-          </div>
-        )}
-      </div>
+        <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+          Crack Interviews with{" "}
+          <span className="text-blue-500">AI-Powered Practice</span>
+        </h1>
 
-      <div className="p-4 border-t border-gray-700 flex gap-3">
+        <p className="mt-6 text-gray-400 max-w-2xl text-lg">
+          Practice role-based interview questions, get instant feedback,
+          and simulate real interviews with AI.
+        </p>
 
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your answer..."
-          className="flex-1 h-12 px-4 rounded-md bg-gray-800 outline-none"
-        />
+        <div className="mt-8 flex gap-4">
+          <button className="bg-blue-600 px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+            Start Practicing
+          </button>
 
-        <button
-          onClick={startListening}
-          className="bg-purple-600 px-4 rounded-md hover:bg-purple-700"
-        >
-          🎤
+          <button className="border border-gray-600 px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+            Try Demo
+          </button>
+        </div>
+
+      </section>
+
+      <section className="px-6 md:px-20 py-16">
+
+        <h2 className="text-3xl font-semibold text-center mb-12">
+          Choose Your Interview Track
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
+
+          {[
+            "Frontend Developer",
+            "Backend Developer",
+            "Full Stack Developer",
+            "DSA Preparation",
+            "UI/UX Designer",
+            "CS Fundamentals"
+          ].map((role, index) => (
+            <div
+              key={index}
+              className="bg-gray-900 p-6 rounded-xl hover:scale-105 transition cursor-pointer border border-gray-800 hover:border-blue-500"
+            >
+              <h3 className="text-xl font-semibold mb-2">{role}</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Practice curated questions and mock interviews
+              </p>
+
+              <button className="text-blue-500 hover:underline">
+                Start →
+              </button>
+            </div>
+          ))}
+
+        </div>
+      </section>
+
+      <section className="px-6 md:px-20 py-16 bg-gray-950">
+
+        <h2 className="text-3xl font-semibold text-center mb-12">
+          How It Works
+        </h2>
+
+        <div className="grid md:grid-cols-4 gap-8 text-center">
+
+          {[
+            "Choose Role",
+            "Practice with AI",
+            "Get Feedback",
+            "Crack Interview"
+          ].map((step, index) => (
+            <div key={index}>
+              <div className="text-blue-500 text-3xl mb-3">
+                {index + 1}
+              </div>
+              <p className="text-gray-300">{step}</p>
+            </div>
+          ))}
+
+        </div>
+      </section>
+
+      <section className="px-6 md:px-20 py-20 text-center">
+
+        <h2 className="text-3xl md:text-4xl font-bold">
+          Ready to Ace Your Next Interview?
+        </h2>
+
+        <p className="text-gray-400 mt-4">
+          Start practicing today and boost your confidence.
+        </p>
+
+        <button className="mt-8 bg-blue-600 px-8 py-3 rounded-lg hover:bg-blue-700 transition">
+          Get Started
         </button>
 
-        <button
-          onClick={sendMessage}
-          className="bg-blue-600 px-6 rounded-md hover:bg-blue-700"
-        >
-          Send
-        </button>
-      </div>
+      </section>
+
+      <footer className="border-t border-gray-800 py-6 text-center text-gray-500">
+        © {new Date().getFullYear()} InterveuX.ai — Built for future devs 🚀
+      </footer>
+
     </div>
   );
 }
