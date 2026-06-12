@@ -183,7 +183,18 @@ export default function Login() {
 
           <p className="text-center text-gray-400 my-4">OR</p>
 
-          
+          <div className="flex justify-center mb-3 w-full">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              theme="filled_blue"
+              size="large"
+              width="100%"
+              text="continue_with"
+              shape="rectangular"
+              logo_alignment="center"
+            />
+          </div>
 
           <button className="w-full h-10 flex items-center justify-center gap-2 bg-gray-300 rounded-md border hover:bg-gray-400 transition">
             <FontAwesomeIcon icon={faGithub} className="h-4 w-4" />

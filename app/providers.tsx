@@ -6,7 +6,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   
   if (!googleClientId) {
-    console.error('❌ NEXT_PUBLIC_GOOGLE_CLIENT_ID is not defined in environment variables');
+    console.error(' NEXT_PUBLIC_GOOGLE_CLIENT_ID is not defined in environment variables');
   }
   
   return (
