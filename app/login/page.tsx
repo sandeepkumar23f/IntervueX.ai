@@ -181,9 +181,10 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="text-center text-gray-400 my-4">OR</p>
+          <p className="text-center text-gray-400 my-4">OR Login with</p>
 
-          <div className="flex justify-center mb-3 w-full">
+
+          <div className="w-full h-10 bg-white text-white rounded-md transition mb-4">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={handleGoogleError}
