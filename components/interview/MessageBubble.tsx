@@ -1,13 +1,31 @@
-export default function MessageBubble({ role, content }: any) {
+import { Message } from "@/types/interview";
+
+type Props = {
+  message: Message;
+};
+
+export default function MessageBubble({
+  message,
+}: Props) {
+  const isUser = message.role === "user";
+
   return (
     <div
-      className={`max-w-xl p-3 rounded-lg transition-all duration-300 ${
-        role === "user"
-          ? "bg-blue-600 ml-auto"
-          : "bg-gray-700"
+      className={`flex ${
+        isUser
+          ? "justify-end"
+          : "justify-start"
       }`}
     >
-      {content}
+      <div
+        className={`max-w-lg rounded-2xl px-4 py-3 ${
+          isUser
+            ? "bg-blue-600"
+            : "bg-gray-900 border border-gray-700"
+        }`}
+      >
+        {message.content}
+      </div>
     </div>
   );
 }
