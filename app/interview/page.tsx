@@ -6,89 +6,185 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 export default function InterviewPage() {
   const router = useRouter();
 
-  const roles = [
-    { title: "Frontend Developer", desc: "React, JS, UI challenges" },
-    { title: "Backend Developer", desc: "APIs, DB, system logic" },
-    { title: "Full Stack Developer", desc: "Frontend + Backend combined" },
-    { title: "DSA", desc: "Problem solving & coding rounds" },
-    { title: "Machine Learning", desc: "ML concepts & case studies" },
-    { title: "Data Science", desc: "Data analysis & stats" },
-    { title: "DevOps Engineer", desc: "CI/CD, Docker, deployment" },
-    { title: "System Design", desc: "Scalable architecture" },
-    { title: "Mobile App Developer", desc: "Android / iOS basics" },
-    { title: "Cyber Security", desc: "Security fundamentals" },
-    { title: "Cloud Engineer", desc: "AWS, Azure, infra" },
-    { title: "HR Interview", desc: "Behavioral & HR questions" },
+  const features = [
+    {
+      icon: "🎯",
+      title: "Mock Interviews",
+      desc: "Practice real interview questions with AI.",
+    },
+    {
+      icon: "📊",
+      title: "AI Feedback",
+      desc: "Get detailed feedback and improvement suggestions.",
+    },
+    {
+      icon: "💻",
+      title: "Technical Rounds",
+      desc: "Frontend, Backend, DSA and more.",
+    },
+    {
+      icon: "🧑‍💼",
+      title: "HR Interviews",
+      desc: "Behavioral and communication practice.",
+    },
+    {
+      icon: "📈",
+      title: "Progress Tracking",
+      desc: "Monitor your growth over time.",
+    },
+    {
+      icon: "🎤",
+      title: "Voice Interviews",
+      desc: "Coming Soon.",
+    },
   ];
 
-  const handleStart = (role: string) => {
-    localStorage.setItem("role", role);
-    router.push("/chat");
-  };
-
-  const handleCustom = () => {
-    localStorage.setItem("role", "custom");
-    router.push("/chat");
-  };
+  const categories = [
+    "Frontend Developer",
+    "Backend Developer",
+    "Full Stack Developer",
+    "DSA",
+    "Machine Learning",
+    "Data Science",
+    "DevOps",
+    "System Design",
+    "Mobile Development",
+    "Cyber Security",
+    "Cloud Engineering",
+    "HR Interview",
+  ];
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-black text-white p-10">
+      <div className="min-h-screen bg-black text-white">
+        
+        {/* Hero Section */}
+        <section className="max-w-6xl mx-auto px-6 py-24 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            Ace Your Next Interview 🚀
+          </h1>
 
-        {/* Heading */}
-        <h1 className="text-3xl font-bold mb-4">
-          Tell me what should we start with?
-        </h1>
-        <p className="text-gray-400 mb-8">
-          You can choose a path or let AI guide you.
-        </p>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+            Practice AI-powered mock interviews, receive personalized
+            feedback, and improve your confidence before the real interview.
+          </p>
 
-        {/* 🔥 Custom AI Start (TOP PRIORITY) */}
-        <div className="mb-10">
-          <div className="bg-linear-to-r from-blue-600 to-purple-600 p-6 rounded-xl">
-            <h2 className="text-xl font-semibold mb-2">
-              Not sure where to begin?
+          <button
+            onClick={() => router.push("/chat")}
+            className="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl text-lg font-semibold transition"
+          >
+            Start Interview →
+          </button>
+        </section>
+
+        {/* Features */}
+        <section className="max-w-6xl mx-auto px-6 py-12">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            What You Can Do
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {features.map((feature) => (
+              <div
+                key={feature.title}
+                className="bg-gray-900 border border-gray-800 rounded-2xl p-6 hover:border-blue-500 transition"
+              >
+                <div className="text-4xl mb-4">{feature.icon}</div>
+
+                <h3 className="text-xl font-semibold mb-2">
+                  {feature.title}
+                </h3>
+
+                <p className="text-gray-400">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Why InterviewX */}
+        <section className="max-w-5xl mx-auto px-6 py-20">
+          <h2 className="text-3xl font-bold text-center mb-10">
+            Why Choose InterviewX?
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              "Personalized AI Interviewer",
+              "Instant Performance Feedback",
+              "Multiple Interview Domains",
+              "Real-World Interview Experience",
+              "Available Anytime",
+              "Track Your Improvement",
+            ].map((item) => (
+              <div
+                key={item}
+                className="bg-gray-900 border border-gray-800 rounded-xl p-5"
+              >
+                ✓ {item}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Interview Categories */}
+        <section className="max-w-6xl mx-auto px-6 py-12">
+          <h2 className="text-3xl font-bold text-center mb-10">
+            Interview Categories
+          </h2>
+
+          <div className="grid md:grid-cols-4 gap-4">
+            {categories.map((category) => (
+              <div
+                key={category}
+                className="bg-gray-900 border border-gray-800 rounded-xl p-5 text-center hover:border-blue-500 transition"
+              >
+                {category}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Coming Soon */}
+        <section className="max-w-5xl mx-auto px-6 py-20">
+          <h2 className="text-3xl font-bold text-center mb-10">
+            Coming Soon 🚀
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+              📄 Resume-Based Interviews
+            </div>
+
+            <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+              🎤 Voice Interviews
+            </div>
+
+            <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+              🏢 Company-Specific Preparation
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="max-w-4xl mx-auto px-6 py-24 text-center">
+          <div className="bg-linear-to-r from-blue-600 to-purple-600 rounded-3xl p-12">
+            <h2 className="text-4xl font-bold mb-4">
+              Ready to Start?
             </h2>
-            <p className="text-sm text-gray-200 mb-4">
-              Let AI ask you questions and decide the best path for you.
+
+            <p className="text-lg text-gray-100 mb-8">
+              Begin your interview preparation journey today with AI-powered
+              mock interviews.
             </p>
 
             <button
-              onClick={handleCustom}
-              className="bg-white text-black px-4 py-2 rounded font-medium hover:bg-gray-200"
+              onClick={() => router.push("/chat")}
+              className="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition"
             >
-              Start Custom →
+              Start Mock Interview →
             </button>
           </div>
-        </div>
-
-        {/* 🔥 Divider */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="flex-1 h-px bg-gray-700"></div>
-          <span className="text-gray-400 text-sm">OR CHOOSE A ROLE</span>
-          <div className="flex-1 h-px bg-gray-700"></div>
-        </div>
-
-        {/* 🔥 Roles Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {roles.map((role) => (
-            <div
-              key={role.title}
-              className="bg-gray-900 p-6 rounded-xl border border-gray-700 hover:border-blue-500 transition"
-            >
-              <h2 className="text-lg font-semibold">{role.title}</h2>
-              <p className="text-gray-400 mt-2 text-sm">{role.desc}</p>
-
-              <button
-                onClick={() => handleStart(role.title)}
-                className="mt-4 bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 text-sm"
-              >
-                Start →
-              </button>
-            </div>
-          ))}
-        </div>
-
+        </section>
       </div>
     </ProtectedRoute>
   );
