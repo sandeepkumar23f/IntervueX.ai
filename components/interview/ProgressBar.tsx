@@ -1,26 +1,31 @@
+import { Message } from "@/types/interview";
+
 type Props = {
-  current: number;
-  total: number;
+  message: Message;
 };
 
-export default function ProgressBar({
-  current,
-  total,
+export default function MessageBubble({
+  message,
 }: Props) {
-  const percentage = (current / total) * 100;
+  const isUser = message.role === "user";
 
   return (
-    <div className="w-full">
-      <div className="h-2 bg-gray-800 rounded-full">
-        <div
-          className="h-2 bg-blue-600 rounded-full"
-          style={{ width: `${percentage}%` }}
-        />
+    <div
+      className={`flex ${
+        isUser
+          ? "justify-end"
+          : "justify-start"
+      }`}
+    >
+      <div
+        className={`max-w-3xl px-5 py-4 rounded-2xl ${
+          isUser
+            ? "bg-blue-600 text-white"
+            : "bg-zinc-900 border border-zinc-800 text-zinc-100"
+        }`}
+      >
+        {message.content}
       </div>
-
-      <p className="text-xs text-gray-400 mt-2">
-        Question {current} of {total}
-      </p>
     </div>
   );
 }

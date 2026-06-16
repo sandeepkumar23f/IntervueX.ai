@@ -18,10 +18,10 @@ export default function MessageBubble({
       }`}
     >
       <div
-        className={`max-w-lg rounded-2xl px-4 py-3 ${
+        className={`max-w-3xl px-5 py-4 rounded-2xl ${
           isUser
-            ? "bg-blue-600"
-            : "bg-gray-900 border border-gray-700"
+            ? "bg-blue-600 text-white"
+            : "bg-zinc-900 border border-zinc-800 text-zinc-100"
         }`}
       >
         {message.content}

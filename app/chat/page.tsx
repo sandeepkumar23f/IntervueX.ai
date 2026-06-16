@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
 
+import Sidebar from "@/components/interview/Sidebar";
 import ChatHeader from "@/components/interview/ChatHeader";
-import ProgressBar from "@/components/interview/ProgressBar";
-import WelcomeCard from "@/components/interview/WelcomeCard";
+import InterviewStats from "@/components/interview/InterviewStats";
 import ChatMessages from "@/components/interview/ChatMessages";
-import TypingIndicator from "@/components/interview/TypingIndicator";
 import ChatInput from "@/components/interview/ChatInput";
+import TypingIndicator from "@/components/interview/TypingIndicator";
+import EmptyState from "@/components/interview/EmptyState";
 
 import { Message } from "@/types/interview";
 
@@ -27,19 +28,22 @@ export default function ChatPage() {
   useEffect(() => {
     const savedRole = localStorage.getItem("role");
 
-    if (!savedRole) return;
+    if (!savedRole) {
+      setRole("InterviewX AI");
+      return;
+    }
 
     setRole(savedRole);
 
-    const initialMessage =
+    const welcomeMessage =
       savedRole === "custom"
-        ? "Welcome to InterviewX 🚀 Tell me what role or topic you'd like to prepare for."
-        : `Welcome to your ${savedRole} interview. Let's begin.`;
+        ? "Welcome to InterviewX 🚀 Tell me what role or company you're preparing for."
+        : `Welcome to your ${savedRole} mock interview. Let's begin.`;
 
     setMessages([
       {
         role: "ai",
-        content: initialMessage,
+        content: welcomeMessage,
       },
     ]);
   }, []);
@@ -67,20 +71,41 @@ export default function ChatPage() {
     setInput("");
     setLoading(true);
 
-    // Temporary AI response
     setTimeout(() => {
-      let aiReply = "Tell me more.";
+      let aiReply =
+        "Interesting answer. Can you explain more?";
 
-      if (role === "Frontend Developer") {
-        aiReply = "What is Virtual DOM in React?";
-      } else if (role === "Backend Developer") {
-        aiReply = "Explain REST APIs.";
-      } else if (role === "DSA") {
-        aiReply =
-          "What is the time complexity of Binary Search?";
-      } else if (role === "custom") {
-        aiReply =
-          "Great. Which company or role are you targeting?";
+      switch (role) {
+        case "Frontend Developer":
+          aiReply =
+            currentQuestion === 1
+              ? "What is Virtual DOM in React?"
+              : "Explain the difference between useState and useRef.";
+          break;
+
+        case "Backend Developer":
+          aiReply =
+            currentQuestion === 1
+              ? "What is REST API?"
+              : "Explain middleware in Express.js.";
+          break;
+
+        case "DSA":
+          aiReply =
+            currentQuestion === 1
+              ? "What is the time complexity of Binary Search?"
+              : "Explain HashMap internal working.";
+          break;
+
+        case "HR Interview":
+          aiReply =
+            "Tell me about yourself and your strengths.";
+          break;
+
+        case "custom":
+          aiReply =
+            "Great! Which role or company are you targeting?";
+          break;
       }
 
       setMessages([
@@ -101,36 +126,50 @@ export default function ChatPage() {
 
   return (
     <ProtectedRoute>
-      <div className="h-screen flex flex-col bg-black text-white">
+      <div className="h-screen bg-[#0f0f0f] text-white flex overflow-hidden">
 
-        <ChatHeader role={role} />
+        {/* Sidebar */}
+        <Sidebar />
 
-        <div className="px-6 pt-4">
-          <ProgressBar
-            current={currentQuestion}
-            total={totalQuestions}
+        {/* Main Chat Area */}
+        <main className="flex-1 flex flex-col">
+
+          {/* Header */}
+          <ChatHeader role={role} />
+
+          {/* Chat Area */}
+          <div className="flex-1 overflow-y-auto">
+
+            {messages.length === 0 ? (
+              <EmptyState />
+            ) : (
+              <>
+                <ChatMessages messages={messages} />
+
+                {loading && (
+                  <TypingIndicator />
+                )}
+
+                <div ref={bottomRef} />
+              </>
+            )}
+
+          </div>
+
+          {/* Input */}
+          <ChatInput
+            input={input}
+            setInput={setInput}
+            sendMessage={sendMessage}
+            loading={loading}
           />
-        </div>
 
-        <div className="px-6 py-4">
-          <WelcomeCard role={role} />
-        </div>
+        </main>
 
-        <div className="flex-1 overflow-y-auto px-6 pb-6 space-y-4">
-
-          <ChatMessages messages={messages} />
-
-          {loading && <TypingIndicator />}
-
-          <div ref={bottomRef} />
-
-        </div>
-
-        <ChatInput
-          input={input}
-          setInput={setInput}
-          sendMessage={sendMessage}
-          loading={loading}
+        {/* Right Stats Panel */}
+        <InterviewStats
+          currentQuestion={currentQuestion}
+          totalQuestions={totalQuestions}
         />
 
       </div>
