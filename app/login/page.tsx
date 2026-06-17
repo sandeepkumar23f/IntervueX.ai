@@ -190,7 +190,7 @@ export default function Login() {
               onError={handleGoogleError}
               theme="filled_blue"
               size="large"
-              width="100%"
+              width="360"
               text="continue_with"
               shape="rectangular"
               logo_alignment="center"
